@@ -1,0 +1,5 @@
+defaults:
+  host: http://api.ims.b2w
+
+production:
+  host: env:IMS_HOST

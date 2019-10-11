@@ -4,7 +4,12 @@
   "description": "Boilerplate para projetos NodeJS",
   "main": "app.js",
   "dependencies": {
-    "express": "4.17.0"
+    "axios": "^0.19.0",
+    "env-o-loader": "^1.0.7",
+    "express": "4.17.0",
+    "http-status": "^1.4.0",
+    "nock": "^11.4.0",
+    "resilient-consumer": "^2.0.1"
   },
   "devDependencies": {
     "acorn": "^7.1.0",
@@ -41,7 +46,8 @@
     "test:acceptance": "npm t test/acceptance/*",
     "test:integration": "npm t test/integration/*",
     "test:unit": "npm t test/unit/*",
-    "worker:<worker-name>": "node worker/<worker-name.js>"
+    "worker:ims-publisher": "node ./bin/workers",
+    "test:debug": "NODE_ENV=test mocha debug"
   },
   "repository": {
     "type": "git",

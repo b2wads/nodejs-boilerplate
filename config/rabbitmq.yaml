@@ -1,0 +1,15 @@
+defaults:
+  url: amqp://localhost
+  exchange: b2ads_test
+  workers:
+    ims-publisher:
+      routingKey: ims_publisher
+      queue: ims_publisher
+
+production:
+  url: env:B2WADS_RABBITMQ_URL
+  exchange: env:B2WADS_RABBITMQ_EXCHANGE
+  workers:
+    ims-publisher:
+      routingKey: env:B2WADS_RABBITMQ_ROUTINGKEY
+      queue: env:B2WADS_RABBITMQ_QUEUE
