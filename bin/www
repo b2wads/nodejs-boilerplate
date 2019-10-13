@@ -1,8 +1,16 @@
 #!/usr/bin/env node
 
 const app = require('../app')
+const dnscache = require('dnscache')
 
 const PORT = process.env.NODE_PORT || 3000
+const disableCache = (process.env.DISABLE_DNS_CACHE === 'true')
+
+dnscache({
+  enable: !(disableCache),
+  ttl: 300,
+  cachesize: 1000
+})
 
 app.listen(PORT, () => {
   console.log(`Listen on port ${PORT}`)
