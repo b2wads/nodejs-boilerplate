@@ -4,7 +4,7 @@
   "description": "Boilerplate para projetos NodeJS",
   "main": "app.js",
   "dependencies": {
-    "dnscache": "^1.0.2",
+    "dnscache": "1.0.2",
     "express": "4.17.0"
   },
   "devDependencies": {
