@@ -11,13 +11,18 @@ describe('ImsPublisherWorker', () => {
 
   describe('a successful message publishing', () => {
 
-    let ImsApiScope
+    let ImsApiScope, forwardedMsg
+    const publishedMsg = { msg: 'tem que enviar isso aí!' }
 
     before(async () => {
-      debugger
-      //ImsApiScope = nock(imsApiConfig.host, httpStatus.OK)
-      await publish({ msg: 'eita porra!' })
+      ImsApiScope = nock(imsApiConfig.host)
+        .post('/path')
+        .reply(
+          httpStatus.OK,
+          (uri, requestBody) => forwardedMsg = requestBody
+        )
       await worker.start()
+      await publish(publishedMsg)
       await worker.stop()
     })
 
@@ -25,9 +30,9 @@ describe('ImsPublisherWorker', () => {
       nock.cleanAll()
     })
 
-    it('should...', () => {
-      debugger
-      expect(false).to.be.equal(true)
+    it('should call IMS endpoint and relay the message', () => {
+      expect(ImsApiScope.isDone()).to.be.true
+      expect(forwardedMsg).to.be.eql(publishedMsg)
     })
   })
 })

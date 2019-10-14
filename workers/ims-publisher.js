@@ -23,16 +23,25 @@ module.exports = WorkerFactory.createWorker({
     routingKey,
     exchange
   },
-  callback(messages) {
-    console.log(messages[0])
 
-    axios({
-      method: 'POST',
-      url: imsApiConfig.host,
-      data: 'tem que enviar isso aí!'
-    })
+  callback(messages) {
+
+    return Promise.all(messages.map(msg => {
+      const imsUpdateEvent = msg.getParsedContent()
+
+      console.log(imsUpdateEvent)
+
+      return axios({
+        method: 'POST',
+        url: `${imsApiConfig.host}/path`,
+        data: imsUpdateEvent
+      })
+    }))
   },
+
   failCallback(messages) {
-    console.log(messages)
+    return messages.map(msg =>
+      console.log(`fail to process the following message: ${msg.getParsedContent}`)
+    )
   }
 })
