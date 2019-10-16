@@ -21,6 +21,7 @@
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-you-dont-need-lodash-underscore": "6.6.0",
+    "husky": "^3.0.8",
     "mocha": "^6.2.1",
     "nyc": "^14.1.1",
     "prettier": "1.17.1",
@@ -41,7 +42,9 @@
     "test:acceptance": "npm t test/acceptance/*",
     "test:integration": "npm t test/integration/*",
     "test:unit": "npm t test/unit/*",
-    "worker:<worker-name>": "node worker/<worker-name.js>"
+    "worker:<worker-name>": "node worker/<worker-name.js>",
+    "precommit": "npm run fmt:check && npm run eslint:check",
+    "prepush": "npm t"
   },
   "repository": {
     "type": "git",
