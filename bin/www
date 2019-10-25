@@ -4,10 +4,13 @@ const app = require('../app')
 const dnscache = require('dnscache')
 
 const PORT = process.env.NODE_PORT || 3000
-const disableCache = process.env.DISABLE_DNS_CACHE === 'true'
+
+const dnsCacheEnabled = process.env.DNS_CACHE_ENABLED !== 'false'
+const dnsCacheTTL = parseInt(process.env.DNS_CACHE_TTL || 300)
+const dnsCacheCacheSize = parseInt(process.env.DNS_CACHE_ENABLED || 1000)
 
 dnscache({
-  enable: !disableCache,
+  enable: enableCache,
   ttl: 300,
   cachesize: 1000
 })
