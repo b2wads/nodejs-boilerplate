@@ -1,87 +1,95 @@
-# Contribution guidelines
+# Guia de Contribuição
 
-### Fast Search
+### Pesquisa rápida
 
-- [Getting Started](#getting-started)
-  - [Language](#language)
-    - [English Native Speakers](#english-native-speakers)
-- [How to Contribute](#how-to-contribute)
-  - [Issues](#issues)
-    - [Documentation](#documentation)
-    - [Enhancement](#enhancement)
+- [Começando](#começando)
+  - [Idioma](#idioma)
+    - [Falantes nativos em Português e Inglês](#falantes-nativos-em-português-e-inglês)
+- [Como contribuir](#como-contribuir)
+    - [Issues](#issues)
+    - [Documentação](#documentação)
+    - [Melhoria/Modificação](#melhoria/modificação)
     - [Bug](#bug)
-- [Dev Environment](#dev-enviroment)
+- [Ambiente de desenvolvimento](#ambiente-de-desenvolvimento)
   - [Scripts](#scripts)
 
----
+### *Also available in English:*
 
-## Getting Started
-
-After all, thanks for consider to contribute with our own project :D
-
-Here, we help you with instructions and guidelines to reduce misunderstandings and make the process of contributing to as smooth as possible.
-
-**Observation**: If you have any question about project, just send a message ;)
-
-### Language
-
-For better comprehension, discutions, code format and help to any person we use **English** as default language
-
-#### English Native Speakers
-
-If you're English native speaker, please, try to use simple words and sentences. If is possible help new English speakers, because with more people saying same language the own development be easy :D
+[Clique aqui](./CONTRIBUTING_en-US.md)
 
 ---
 
-## How To Contribute
+## Começando
 
-Here are three forms to contribute with project, and doesn't metter if you are initial or expert dev, **all can help!**
+Obrigado por considerar contribuir como nosso projeto :D
 
-### Issues
+Aqui, vamos ajudar com instruções e orientações para reduzir mal entendimentos, e fazer o processo de contribuição ser o mais simples possível
 
-Through issues you can help us with fallowing ways
+**Observação**: Se você tiver qualquer pergunta sobre o projeto, mande uma mensagem ;)
 
-#### Documentation
+### Idioma
 
-If you're user of `boilerplate`, you're perfect to help us with improve documentation
+Em nosso repositório nós usamos **Português**, mas se você fala outra língua, nós gostaríamos que você usasse **Inglês** para ajudar com a comunicação
 
-Through Typos, examples and formating, this is examples that you could be improve in our documentation
+#### Falantes nativos em Português e Inglês
 
-While documenting, try to keep things simple and clear
+Se você é um falante nativo de Inglês ou Português, por favor, tente usar palavras e frases simples.
 
-#### Enhancement
+---
 
-With enhancement you can do hard code and good tests to help our code grow, this is possible if you help someone with a feature, doing a better implementation or bringing your ideas
+## Como contribuir
 
-It's very important code formarting, and best pratices (clean code is a example), and always test your code :D
+Aqui há quatro formas de contribuir com o projeto, e não se preocupe se você é um desenvolvedor iniciante ou expert, **todos podem contribuir!**
+
+#### Issues
+
+Se você estiver interessado em criar uma issue, você pode fazer isso! Mas antes de criar veja as seguintes informações, talvez ajude você
+
+  - Antes de criar sua issue, pesquise por alguma igual ou similiar
+  - Usar títulos descrivos
+  - ínclua informações claras, para ajudar os outros contribuidores
+
+#### Documentação
+
+Se você é um usuário do `boilerplate`, você é perfeito para ajudar a encrementar a documentação
+
+Através de erros de digitação, exemplos e formatações,  são exemplos que podem ser implementados em nossa documentação
+
+Enquanto documenta, tente mantes as coisas simples a claras
+
+#### Melhoria/Modificação
+
+Com a melhoria ou modificação do código você pode fazer coisas incríveis e bons testes para nos ajudar nosso projeto crescer, isso é possivel se você ajudar alguém com alguma feature, fazendo uma boa implementação ou trazendo ideias
+
+É extremamente importante a formatação de código, e boas práticas (código limpo é um bom exemplo), e sempre teste seu código :D
 
 #### Bug
 
-Find a bug? Report please
+Achou algum bug? Reporte para nós com uma issue
 
-Find a bug and report to us is very important to maintain project integrity. You can do it send code has a bug, console errors/trackings, images and gifs
+Achar bugs e reportar para nós é muito importante para manter a integridade do projeto. Você pode mandar onde está o bug para nos ajudar também, erros/trackings que aparecem no console, imagens e gifs
 
-If you have a code implementation to resolve some bug, just send us :D
+Se você tem uma implementação para resolver um bug, abra uma issue e mande para nós :D
 
 ---
 
-## Dev Environment
+## Ambiente de desenvolvimento
 
-When developing, prefer using **Node** ≥ 10.x
+Durante o desenvolvimento, prefirimos usar  **Node** >= 10.x
 
 ### Scripts
 
-In development you go need some scripts
+Durante o desenvolvimento você precisará de alguns scripts
 
-- `cron:<cron-name>`: Start scheduled task script
-- `codecov`: Sendo coverage to [codecov.io](codecov.io)
-- `deps`: Initialize project development dependencies
-- `fix:<fix-name>`: Start correction script
-- `fmt`: Format code using styleguide of [.prettierrc](.prettierrc) and [.eslintrc](.eslintrc)
-- `fmt:check`: Check code guideline
-- `start`: Start app
-- `test`: Start tests
-- `test:acceptance`: Execute acceptance tests
-- `test:integration`: Executa integration tests
-- `test:unit`: Execute unit tests
-- `worker:<worker-name>`: Start worker
+- `npm run cron:<cron-name>`: Inicia script de tarefa agendada
+- `npm run codecov`: Envia métricas de code coverage para o [codecov.io](codecov.io)
+- `npm run deps`: Inicializa as dependências de desenvolvimento do projeto
+- `npm run fix:<fix-name>`: Executa script de correção
+- `npm run fmt`: Formata código segundo estilo definido em [.prettierrc](.prettierrc) e [.eslintrc](.eslintrc)
+- `npm run fmt:check`: Verifica se o código segue o padrão de estilo
+- `npm run start`: Inicia a aplicação
+- `npm run test`: Executa todos os testes
+- `npm run test:acceptance`: Executa testes de aceitação
+- `npm run test:integration`: Executa testes de integração
+- `npm run test:unit`: Execute testes unitários
+- `npm run worker:<worker-name>`: Inicia worker
