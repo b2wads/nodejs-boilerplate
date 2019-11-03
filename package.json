@@ -14,7 +14,6 @@
     "eslint-config-prettier": "6.1.0",
     "eslint-plugin-chai-friendly": "^0.4.1",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "22.15.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-no-unsafe-regex": "1.0.0",
     "eslint-plugin-prettier": "3.1.0",
@@ -41,7 +40,7 @@
     "test:acceptance": "npm t test/acceptance/*",
     "test:integration": "npm t test/integration/*",
     "test:unit": "npm t test/unit/*",
-    "worker:<worker-name>": "node worker/<worker-name.js>"
+    "worker:<worker-name>": "node workers/<worker-name.js>"
   },
   "repository": {
     "type": "git",
