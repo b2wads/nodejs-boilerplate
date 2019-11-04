@@ -18,7 +18,9 @@ Descrição breve sobre o projeto
 |  Variável           |         Descrição         | Valor padrão |
 |:-------------------:|:--------------------------|:------------:|
 | `NODE_PORT`         | Porta padrão da aplicação |    `3000`    |
-| `ENABLE_DNS_CACHE`  | Desabilita cache de DNS   |    `true`    |
+| `DNS_CACHE_ENABLED` | Desabilita cache de DNS   |    `true`    |
+| `DNS_CACHE_TTL`     | TTL do cache de DNS       |    `300`     |
+| `DNS_CACHE_SIZE`    | Tamanho do cache          |    `1000`    |
 
 
 # Como rodar
