@@ -7,7 +7,7 @@ const PORT = process.env.NODE_PORT || 3000
 
 const dnsCacheEnabled = process.env.DNS_CACHE_ENABLED !== 'false'
 const dnsCacheTTL = parseInt(process.env.DNS_CACHE_TTL || 300)
-const dnsCacheCacheSize = parseInt(process.env.DNS_CACHE_ENABLED || 1000)
+const dnsCacheCacheSize = parseInt(process.env.DNS_CACHE_SIZE || 1000)
 
 dnscache({
   enable: dnsCacheEnabled,
