@@ -1,0 +1,8 @@
+defaults:
+  minSamples: 10
+  maxTime: 2
+  async: true
+test:
+  minSamples: env:BENCHMARK_MIN_SAMPLES
+  maxTime: env:BENCHMARK_MAX_TIME
+  async: env:BENCHMARK_ASYNC
