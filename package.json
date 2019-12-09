@@ -4,10 +4,12 @@
   "description": "Boilerplate para projetos NodeJS",
   "main": "app.js",
   "dependencies": {
+    "env-o-loader": "^1.0.7",
     "express": "4.17.0"
   },
   "devDependencies": {
     "acorn": "^7.1.0",
+    "benchmark": "^2.1.4",
     "chai": "^4.2.0",
     "eslint": "6.2.2",
     "eslint-config-airbnb": "18.0.1",
@@ -40,7 +42,8 @@
     "test:acceptance": "npm t test/acceptance/*",
     "test:integration": "npm t test/integration/*",
     "test:unit": "npm t test/unit/*",
-    "worker:<worker-name>": "node workers/<worker-name.js>"
+    "worker:<worker-name>": "node workers/<worker-name.js>",
+    "benchmark": "./bin/run-benchmark.sh ./benchmark/sqrt.js"
   },
   "repository": {
     "type": "git",
