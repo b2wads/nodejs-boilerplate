@@ -18,7 +18,9 @@ A nomenclatura segue as seguintes regras:
 
 # Versão do Node
 
-Usaremos sempre a versão mais atual e que seja [LTS](https://nodejs.org/en/about/releases/).
+Usaremos sempre a versão _major_ mais atual e que seja [Active LTS](https://nodejs.org/en/about/releases/).
+Nosso pipeline de CI roda testes usando a versão _patch_ atual do projeto, a versão _Active LTS_ e a versão _latest_.
+O objetivo é manter o código sempre compatível com as versões mais atuais, possibilitando uma migração o mais transparente possível.
 
 
 # O que está incluído nesse boilerplate

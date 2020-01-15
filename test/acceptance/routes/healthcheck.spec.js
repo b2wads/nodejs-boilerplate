@@ -6,16 +6,16 @@ describe('HealthCheck test', () => {
   describe('GET /healthcheck', () => {
     let res
 
-    beforeAll(async () => {
+    before(async () => {
       res = await request(app).get('/healthcheck')
     })
 
     it('should return 200', () => {
-      expect(res.status).toBe(200)
+      expect(res.status).to.be.eql(200)
     })
 
     it("should return { status: 'ok' }", () => {
-      expect(res.body).toHaveProperty('status', 'ok')
+      expect(res.body).to.have.property('status', 'ok')
     })
   })
 })

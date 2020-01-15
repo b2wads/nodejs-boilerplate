@@ -3,16 +3,36 @@
     Utilize, dê feedback e contribua 🎉
 -->
 
-
 ### Descrição
 
-<!-- 
-   Escreva uma descrição a respeito das alterações que você está fazendo, 
+Task: [ABC-123](link-da-task-no-jira)
+Staging URL: [staging-url.app.io](staging-url.app.io)
+
+#### Qual o problema
+
+<!--
+   Escreva uma descrição a respeito das alterações que você está fazendo,
    enumerando os impactos isso tem para o projeto.
 -->
 
-Task: [ABC-123](link-da-task-no-jira)    
-Staging URL: [staging-url.app.io](staging-url.app.io)
+#### O que foi feito
+
+<!--
+   Escreva aqui mais profundamente como funciona a implementação do que
+   este PR abrange.
+-->
+
+#### Como testar
+
+<!--
+   Escreva uma descrição a respeito de como testar suas alterações.
+-->
+
+### Checklist
+
+- [ ] Item 1
+- [ ] Item 2
+- [ ] Item 3
 
 ### Features
 - Feature 1
@@ -25,12 +45,3 @@ Staging URL: [staging-url.app.io](staging-url.app.io)
 ### Refacs
 - Refac 1
 - Refac 2
-
-### WIP
-- [ ] Falta fazer ...
-- [ ] Implementar ...
-- [ ] Remover
-
-### PR's relacionadas
-- [#13](pr-link-13)
-- [#14](pr-link-13)

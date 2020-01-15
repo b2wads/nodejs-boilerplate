@@ -1,43 +1,151 @@
 version: 2.1
 
+orbs:
+  docker: circleci/docker@0.5.13
+
 commands:
   all-tests:
-    description: "Roda todos os testes do projeto (unitários e integração)"
+    description: Roda todos os testes do projeto (unitários e integração)
     steps:
-      - run: "npm test"
+      - run: npm t
+  coverage-report:
+    description: Gera o relatório de coverage
+    steps:
+      - run: npm run test:coverage-report
+  format-check:
+    description: Verifica formatação do código
+    steps:
+      - run: npm run fmt:check
+  install-deps:
+    description: Instala dependências do projeto
+    steps:
+      - run: npm install
+  install-git:
+    description: Instala git
+    steps:
+      - run:
+          command: |
+            if ! [ -x "$(command -v git)" ]; then
+              apk add git
+            fi
+  upload-coverage:
+    description: Faz o envio do relatório de cobertura de testes para o Codecov
+    steps:
+      - run:
+          command: |
+            apk add bash curl
+            wget -O codecov_bash https://codecov.io/bash
+            bash codecov_bash
 
 jobs:
-  node10x: &template
+  build:
+    parameters:
+      coverage:
+        default: true
+        description: Indica se o relatório de cobertura será gerado e enviado ao Codecov
+        type: boolean
+      docker-auth-username:
+        description: Username usado para autenticação no docker registry
+        default: ""
+        type: string
+      docker-auth-password:
+        description: Password usado para autenticação no docker registry
+        default: ""
+        type: string
+      image:
+        default: node:lts-alpine
+        description: Nome da imagem principal onde rodará o build
+        type: string
     docker:
-      - image: circleci/node:10-jessie
-        #auth:
-          #username: $B2WADS_DOCKER_REGISTRY_USERNAME
-          #password: $B2WADS_DOCKER_REGISTRY_PASSWORD
+      - image: <<parameters.image>>
+        auth:
+          username: <<parameters.docker-auth-username>>
+          password: <<parameters.docker-auth-password>>
       #- image: mongo:3.6
       #- image: elasticsearch:5
       #- image: rabbitmq:3.6-alpine
       #- image: redis:5
     steps:
+      - install-git
       - checkout
-      - run:
-          name: Install deps
-          command: npm install
-      - run:
-          name: Format check
-          command: npm run fmt:check
+      - install-deps
+      - format-check
       - all-tests
-      - run:
-          when: on_success
-          command: npm run codecov
-  node11x:
-      <<: *template
-      docker:
-        - image: circleci/node:11
-        #- image: mongo:3.6
-        #- image: elasticsearch:5
-        #- image: rabbitmq:3.6-alpine
-        #- image: redis:5
+      - when:
+          condition: <<parameters.coverage>>
+          steps:
+            - coverage-report
+            - upload-coverage
 
+  build-image:
+    description: Faz login no registry, monta uma imagem docker e faz push para o registry
+    parameters:
+      registry:
+        type: string
+      registry-username:
+        type: string
+      registry-password:
+        type: string
+      image:
+        type: string
+        default: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      image-tag:
+        type: string
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/check:
+          registry: << parameters.registry >>
+          docker-username: << parameters.registry-username >>
+          docker-password: << parameters.registry-password >>
+      - docker/build: &build-template
+          step-name: Building docker image
+          registry: << parameters.registry >>
+          image: << parameters.image >>
+          tag: << parameters.image-tag >>
+      - docker/push:
+          <<: *build-template
+          step-name: Pushing to registry
+          tag: << parameters.image-tag >>
+  
+  notify-build-status:
+    description: Envia uma mensagem na página do PR com informações do build
+    parameters:
+      registry:
+        type: string
+      image:
+        type: string
+        default: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      image-tag:
+        type: string
+      github-repo-path:
+        type: string
+        default: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+      github-api-address:
+        type: string
+        default: https://api.github.com
+      github-address:
+        type: string
+        default: https://github.com
+      github-api-token:
+        type: string
+    executor: docker/machine
+    steps:
+      - run:
+          name:  Notify build status
+          command: |
+            GITHUB_PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///g')
+            GITHUB_COMMIT_PAGE_URL=<< parameters.github-address >>/<< parameters.github-repo-path >>/pull/$GITHUB_PR_NUMBER/commits/$CIRCLE_SHA1
+            GITHUB_API_URL=<< parameters.github-api-address >>/repos/<< parameters.github-repo-path >>/issues/$GITHUB_PR_NUMBER/comments
+            COMMIT_HASH=${CIRCLE_SHA1:0:7}
+            DOCKER_IMAGE=<< parameters.registry >>/<< parameters.image >>:<< parameters.image-tag >>
+            MESSAGE_BODY=":robot: A docker image of this app was pushed to registry!\n\n \
+              :package: Built with commit [$COMMIT_HASH]($GITHUB_COMMIT_PAGE_URL) \
+              \n\n :rocket: Pull this image in **$DOCKER_IMAGE**"
+
+            response=$(curl -v -d  "{\"body\":\"$MESSAGE_BODY\"}" -H "Content-Type: application/json" \
+            -H "Authorization: token << parameters.github-api-token >>" POST -o /dev/null -s -w "%{http_code}\n" $GITHUB_API_URL)
+            if [ "${response: -3}" -ne "201" ]; then echo "Erro ao notificar build" && exit 1; fi
 
 # O `context:` abaixo deve ser usado se você precisa
 # de uma imagem privada. Nesse context devem estar cadastradas as envs:
@@ -47,9 +155,71 @@ workflows:
   version: 2
   required-checks:
     jobs:
-      - node10x:
+      - build:
           context: docker-registry-auth
+          image: node:12.14.0-alpine
+          name: node-12
+      
+      # Remova os comentário abaixo se quiser realizar build 
+      # de uma imagem staging do repositório
+
+      # - build-image: &build-template
+      #     context: docker-registry-auth
+      #     name: build-staging
+      #     registry: $B2WADS_DOCKER_REGISTRY
+      #     registry-username: B2WADS_DOCKER_REGISTRY_USERNAME
+      #     registry-password: B2WADS_DOCKER_REGISTRY_PASSWORD
+      #     image-tag: staging-$(echo "$CIRCLE_BRANCH" | sed 's/\W/-/g')
+      #     requires:
+      #       - node-12
+      #     filters:
+      #       branches:
+      #         ignore: master
+      # - notify-build-status: &notify-build-status-template
+      #     context: docker-registry-auth
+      #     name: notify-build-staging
+      #     registry: $B2WADS_DOCKER_REGISTRY
+      #     image-tag: staging-$(echo "$CIRCLE_BRANCH" | sed 's/\W/-/g')
+      #     github-api-token: $GITHUB_API_TOKEN
+      #     requires:
+      #       - build-staging
+
+      # Remova os comentário abaixo se quiser realizar build 
+      # de de imagem latest e tag quando mergear para master
+
+      # - build-image:
+      #     <<: *build-template
+      #     name: build-tag
+      #     image-tag: ${CIRCLE_SHA1:0:7}
+      #     filters:
+      #       branches:
+      #         only: master
+      # - notify-build-status:
+      #     <<: *notify-build-status-template
+      #     name: notify-build-tag
+      #     image-tag: ${CIRCLE_SHA1:0:7}
+      #     requires:
+      #       - build-tag
+
+      # - build-image: &build-latest
+      #     <<: *build-template
+      #     name: build-latest
+      #     image-tag: latest
+      #     filters:
+      #       branches:
+      #         only: master
+      # - notify-build-status:
+      #     <<: *notify-build-status-template
+      #     name: notify-build-latest
+      #     requires:
+      #       - build-latest
+
   optional-checks:
     jobs:
-      - node11x:
-          context: docker-registry-auth
+      - build:
+          coverage: false
+          name: node-lts
+      - build:
+          coverage: false
+          image: node:alpine
+          name: node-latest

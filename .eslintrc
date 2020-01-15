@@ -5,7 +5,6 @@
   },
   "extends": [
     "airbnb",
-    "plugin:jest/recommended",
     "plugin:security/recommended",
     "plugin:you-dont-need-lodash-underscore/compatible",
     "prettier"
@@ -16,7 +15,6 @@
     "no-unsafe-regex/no-unsafe-regex": "error",
     "func-names": ["warn", "always", { "generators": "never" }],
     "no-underscore-dangle": "off",
-    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
     "camelcase": [
       "error",
       {

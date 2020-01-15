@@ -7,25 +7,25 @@
     "express": "4.17.0"
   },
   "devDependencies": {
-    "codecov": "3.5.0",
+    "acorn": "^7.1.0",
+    "chai": "^4.2.0",
     "eslint": "6.2.2",
     "eslint-config-airbnb": "18.0.1",
     "eslint-config-prettier": "6.1.0",
+    "eslint-plugin-chai-friendly": "^0.4.1",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "22.15.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-no-unsafe-regex": "1.0.0",
     "eslint-plugin-prettier": "3.1.0",
     "eslint-plugin-react": "7.14.3",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-you-dont-need-lodash-underscore": "6.6.0",
-    "jest": "24.8.0",
+    "mocha": "^6.2.1",
+    "nyc": "^14.1.1",
     "prettier": "1.17.1",
     "supertest": "4.0.2"
   },
   "scripts": {
-    "cron:<cron-name>": "node scripts/cron-<cron-name>.js",
-    "codecov": "./node_modules/.bin/codecov",
     "deps": "docker-compose up --build --force-recreate",
     "eslint": "./node_modules/.bin/eslint --fix .",
     "eslint:check": "./node_modules/.bin/eslint .",
@@ -35,11 +35,12 @@
     "prettier": "./node_modules/.bin/prettier --write \"**/{*.js,*.json,bin/**}\"",
     "prettier:check": "./node_modules/.bin/prettier --check \"**/{*.js,*.json,bin/**}\"",
     "start": "node ./bin/www",
-    "test": "./node_modules/.bin/jest --coverage",
-    "test:acceptance": "./node_modules/.bin/jest --coverage test/acceptance/*",
-    "test:integration": "./node_modules/.bin/jest --coverage test/integration/*",
-    "test:unit": "./node_modules/.bin/jest --coverage test test/unit/*",
-    "worker:<worker-name>": "node worker/<worker-name.js>"
+    "test": "./node_modules/.bin/nyc mocha --reporter spec",
+    "test:coverage-report": "nyc report --reporter=text-lcov > coverage.lcov",
+    "test:acceptance": "npm t test/acceptance/*",
+    "test:integration": "npm t test/integration/*",
+    "test:unit": "npm t test/unit/*",
+    "worker:<worker-name>": "node workers/<worker-name.js>"
   },
   "repository": {
     "type": "git",
