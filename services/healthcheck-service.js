@@ -4,7 +4,7 @@ const HealthCheckService = {
   async status() {
     logger.debug({
       action: 'healthcheckService.status',
-      msg: 'Check API health'
+      msg: 'Checking API health'
     })
     return Promise.resolve({ status: 'ok' })
   }
