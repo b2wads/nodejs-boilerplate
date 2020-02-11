@@ -4,6 +4,7 @@
   "description": "Boilerplate para projetos NodeJS",
   "main": "app.js",
   "dependencies": {
+    "@b2wads/logger": "1.0.3",
     "express": "4.17.0"
   },
   "devDependencies": {
