@@ -5,7 +5,7 @@ describe('HealthCheckService', () => {
     it("should return { stauts: 'ok' } ", async () => {
       const status = await HealthCheckService.status()
       expect(status).to.be.eql({
-        status: 'ok'
+        status: 'ok',
       })
     })
   })
