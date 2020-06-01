@@ -1,4 +1,4 @@
-FROM node:12.14.0-alpine
+FROM node:12.17.0-alpine
 
 WORKDIR /var/app
 
