@@ -5,7 +5,8 @@
   "main": "app.js",
   "dependencies": {
     "@b2wads/logger": "1.0.3",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "chai": "4.2.0",
