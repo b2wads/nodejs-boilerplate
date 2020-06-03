@@ -9,6 +9,7 @@ A nomenclatura segue as seguintes regras:
 - Arquivos: Nome minpusculo separado por `-`. `nome-de-arquivo.js`.
 - Código: [CamelCase](https://pt.wikipedia.org/wiki/CamelCase). `minhaVariavel`.
 - Objetos JSON: Nome das chaves em [snake_case](https://en.wikipedia.org/wiki/Snake_case).
+
 ```
   {
     "campo_com_multiplas_palavras": "valor"
@@ -142,6 +143,51 @@ Pasta para armazenar schemas da aplicação, utilizando validador de schema `yup
 
 - `schemas/controllers`: Schemas utilizados nos controllers da aplicação
 - `schemas/workers`: Schemas utilizados nos workers da aplicação
+
+A definição dos schemas deve ser um objeto com o mesmo nome do método onde será aplicado.
+
+Para controllers, podemos validar o objeto `req` inteiro e utilizar o nome do método no controller como o objeto do schema:
+
+`schemas/controllers/foo-schema.js`
+
+```js
+module.exports = {
+  add: schema({
+    query: schema({
+      limit: number().default(10),
+      offset: number().default(0),
+    }),
+    body: schema({
+      name: string().required(),
+      age: number().required(),
+    }),
+  }),
+
+  delete: schema({
+    params: schema({
+      id: number().required(),
+    }),
+  }),
+}
+```
+
+`controllers/foo-controller.js`
+
+```js
+const schema = require('schemas/controllers/foo-schema')
+
+module.exports = {
+  async add(req, res) {
+    const data = schema.add.valid(req)
+    // ...
+  },
+
+  async delete(req) {
+    const data = schema.delete.valid(req)
+    // ...
+  },
+}
+```
 
 ### services/
 
