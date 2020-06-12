@@ -62,3 +62,7 @@ typings/
 
 # IDE
 .vscode
+*.swp
+*.swo
+*.orig
+*~
