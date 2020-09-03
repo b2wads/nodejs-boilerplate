@@ -1,4 +1,4 @@
-const logger = require('../clients/logger')
+const logger = require('@b2wads/logger')
 
 const HealthCheckService = {
   async status() {
