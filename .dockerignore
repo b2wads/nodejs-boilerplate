@@ -1,0 +1,5 @@
+*.swo
+*.swp
+.vscode
+node_modules
+npm-*.log

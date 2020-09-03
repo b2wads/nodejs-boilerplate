@@ -157,7 +157,7 @@ workflows:
     jobs:
       - build:
           context: docker-registry-auth
-          image: node:12.14.0-alpine
+          image: node:12.19.0-alpine
           name: node-12
       
       # Remova os comentário abaixo se quiser realizar build 
