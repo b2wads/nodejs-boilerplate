@@ -1,5 +1,0 @@
---require chai/register-expect
---require ./test/setup.js
---recursive
---exit
---timeout 6000

@@ -4,7 +4,7 @@
     "node": true
   },
   "extends": [
-    "airbnb",
+    "airbnb-base",
     "plugin:security/recommended",
     "plugin:you-dont-need-lodash-underscore/compatible",
     "prettier"
