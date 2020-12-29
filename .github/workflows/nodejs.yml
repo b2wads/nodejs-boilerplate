@@ -1,0 +1,23 @@
+name: Build and Test
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  node-lts:
+    runs-on: ubuntu-latest
+    container:
+      image: node:lts-jessie
+      env: 
+        NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install deps
+        run: npm install
+      - name: Limpa tree do git
+        run: git remote rm origin
+      - name: Roda todos os testes do projeto (unitários e integração)
+        run: npm test
+        
