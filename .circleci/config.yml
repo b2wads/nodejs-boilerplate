@@ -107,7 +107,7 @@ jobs:
           <<: *build-template
           step-name: Pushing to registry
           tag: << parameters.image-tag >>
-  
+
   notify-build-status:
     description: Envia uma mensagem na página do PR com informações do build
     parameters:
@@ -132,7 +132,7 @@ jobs:
     executor: docker/machine
     steps:
       - run:
-          name:  Notify build status
+          name: Notify build status
           command: |
             GITHUB_PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed 's/.*\/pull\///g')
             GITHUB_COMMIT_PAGE_URL=<< parameters.github-address >>/<< parameters.github-repo-path >>/pull/$GITHUB_PR_NUMBER/commits/$CIRCLE_SHA1
@@ -157,12 +157,10 @@ workflows:
     jobs:
       - build:
           context: docker-registry-auth
-          image: node:12.19.0-alpine
-          name: node-12
-      
-      # Remova os comentário abaixo se quiser realizar build 
+          image: node:14.15.5-alpine
+          name: node-14
+      # Remova os comentário abaixo se quiser realizar build
       # de uma imagem staging do repositório
-
       # - build-image: &build-template
       #     context: docker-registry-auth
       #     name: build-staging
@@ -183,10 +181,8 @@ workflows:
       #     github-api-token: $GITHUB_API_TOKEN
       #     requires:
       #       - build-staging
-
-      # Remova os comentário abaixo se quiser realizar build 
+      # Remova os comentário abaixo se quiser realizar build
       # de de imagem latest e tag quando mergear para master
-
       # - build-image:
       #     <<: *build-template
       #     name: build-tag
@@ -200,7 +196,6 @@ workflows:
       #     image-tag: ${CIRCLE_SHA1:0:7}
       #     requires:
       #       - build-tag
-
       # - build-image: &build-latest
       #     <<: *build-template
       #     name: build-latest
